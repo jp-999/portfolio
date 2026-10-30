@@ -176,9 +176,36 @@
     .stats{grid-template-columns:repeat(2,1fr)}
   }
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+
+  /* ---- intro loader ---- */
+  body.loading{overflow:hidden}
+  .loader{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:var(--bg);overflow:hidden}
+  .loader-panels{position:absolute;inset:0;display:flex}
+  .loader-panels>div{flex:1;background:var(--bg2);transform:translateY(0);transition:transform 1s cubic-bezier(.76,0,.24,1)}
+  .loader.done .loader-panels>div{transform:translateY(-100.5%)}
+  .loader.done .loader-panels>div:nth-child(2){transition-delay:.08s}
+  .loader.done .loader-panels>div:nth-child(3){transition-delay:.16s}
+  .loader.done .loader-panels>div:nth-child(4){transition-delay:.24s}
+  .loader.done .loader-panels>div:nth-child(5){transition-delay:.32s}
+  .loader-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:20px;transition:opacity .5s,transform .5s}
+  .loader.done .loader-content{opacity:0;transform:scale(.92)}
+  .loader-ring{position:relative;width:128px;height:128px;display:flex;align-items:center;justify-content:center}
+  .loader-ring::before{content:"";position:absolute;inset:0;border-radius:50%;padding:2px;background:conic-gradient(from 0deg,#a78bfa,#ec4899,#22d3ee,#a78bfa);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 2.2s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .loader-mono{font-family:"Space Grotesk";font-weight:700;font-size:3rem;background:var(--grad);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 2.5s linear infinite}
+  .loader-count{font-family:"Space Grotesk";font-weight:600;font-size:1.05rem;color:var(--muted);letter-spacing:.06em}
+  .loader-count i{color:var(--c2);font-style:normal}
 </style>
 </head>
 <body>
+<div class="loader" id="loader">
+  <div class="loader-panels"><div></div><div></div><div></div><div></div><div></div></div>
+  <div class="loader-content">
+    <div class="loader-ring"><div class="loader-mono">JP</div></div>
+    <div class="loader-count"><span id="lcount">0</span><i>%</i></div>
+  </div>
+</div>
+
 <div class="aurora"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
 <div class="grid-overlay"></div>
 <div class="cursor-glow" id="glow"></div>
@@ -204,7 +231,6 @@
   <p class="lede reveal">AI &amp; Quality Operations professional working at the intersection of <strong style="color:var(--text)">GenAI training</strong>, <strong style="color:var(--text)">RLHF/SFT</strong>, and <strong style="color:var(--text)">full-stack engineering</strong> — improving LLM performance, holding the quality bar, and scaling project operations.</p>
   <div class="cta reveal">
     <a class="btn primary" href="#contact">Get in touch &rarr;</a>
-    <a class="btn ghost" href="Jayanth_Peddi_Resume.pdf" download>Download CV</a>
     <a class="btn ghost" href="https://github.com/jp-999" target="_blank" rel="noopener">GitHub</a>
   </div>
   <div class="scroll-ind reveal"><span class="mouse"></span> SCROLL TO EXPLORE</div>
@@ -387,6 +413,23 @@
 <script>
 (function(){
   "use strict";
+
+  // intro loader
+  (function(){
+    var loader=document.getElementById('loader'); if(!loader) return;
+    var lc=document.getElementById('lcount'), done=false;
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.body.classList.add('loading');
+    function finish(){ if(done) return; done=true; loader.classList.add('done'); document.body.classList.remove('loading'); setTimeout(function(){ loader.style.display='none'; }, 1500); }
+    if(reduce){ if(lc) lc.textContent='100'; finish(); }
+    else {
+      var start=null, dur=1600;
+      function run(ts){ if(start===null) start=ts; var p=Math.min((ts-start)/dur,1); if(lc) lc.textContent=Math.floor(p*100); if(p<1){ requestAnimationFrame(run); } else { if(lc) lc.textContent=100; setTimeout(finish,280); } }
+      requestAnimationFrame(run);
+      setTimeout(finish, 4500); // safety fallback
+    }
+  })();
+
   // year
   document.getElementById('year').textContent = new Date().getFullYear();
 
