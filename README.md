@@ -1,11 +1,11 @@
-# Jayanth Peddi — Portfolio
+# Jayanth Peddi · Portfolio
 
 A bold, single-page, dependency-free portfolio. Vanilla HTML/CSS/JS, deployed on GitHub Pages.
 
 **Live:** https://jp-999.github.io/portfolio/
 
 ## About
-AI &amp; Quality Operations professional — GenAI training, RLHF/SFT, LLM &amp; AI-code evaluation, and full-stack engineering.
+AI &amp; Quality Operations professional: GenAI training, RLHF/SFT, LLM &amp; AI-code evaluation, and full-stack engineering.
 
 ## Features
 - Animated aurora background + cursor glow
