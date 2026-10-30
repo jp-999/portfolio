@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jayanth Peddi — AI & Quality Operations</title>
+<meta name="description" content="Jayanth Peddi — AI & Quality Operations professional. GenAI training, RLHF/SFT, LLM & AI-code evaluation, and full-stack engineering.">
+<meta name="color-scheme" content="dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07070c; --bg2:#0c0c16; --card:rgba(255,255,255,.04); --stroke:rgba(255,255,255,.10);
+    --text:#eef0ff; --muted:#a6a8c4; --c1:#7c3aed; --c2:#ec4899; --c3:#06b6d4; --c4:#22d3ee;
+    --grad:linear-gradient(90deg,#a78bfa,#ec4899 45%,#22d3ee);
+    --max:1120px;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    line-height:1.6;overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:"Space Grotesk",Inter,sans-serif;letter-spacing:-.02em}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%}
+  ::selection{background:var(--c2);color:#fff}
+
+  /* ---- animated aurora background ---- */
+  .aurora{position:fixed;inset:0;z-index:-2;overflow:hidden;background:
+      radial-gradient(1200px 800px at 80% -10%,rgba(124,58,237,.18),transparent 60%),
+      radial-gradient(1000px 700px at 0% 10%,rgba(6,182,212,.15),transparent 55%),var(--bg)}
+  .blob{position:absolute;width:46vw;height:46vw;border-radius:50%;filter:blur(90px);opacity:.55;mix-blend-mode:screen;animation:float 22s ease-in-out infinite}
+  .blob.b1{background:#7c3aed;top:-8%;left:-6%}
+  .blob.b2{background:#ec4899;bottom:-12%;right:-8%;animation-delay:-7s}
+  .blob.b3{background:#06b6d4;top:35%;left:40%;width:34vw;height:34vw;animation-delay:-13s}
+  @keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(6%,8%) scale(1.08)}66%{transform:translate(-5%,-6%) scale(.95)}}
+  .grid-overlay{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+    background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:44px 44px;mask-image:radial-gradient(circle at 50% 30%,#000,transparent 75%)}
+
+  /* ---- cursor glow ---- */
+  .cursor-glow{position:fixed;top:0;left:0;width:380px;height:380px;border-radius:50%;pointer-events:none;z-index:0;
+    background:radial-gradient(circle,rgba(124,58,237,.16),transparent 65%);transform:translate(-50%,-50%);transition:opacity .3s;will-change:transform}
+
+  /* ---- scroll progress ---- */
+  .progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:100;background:var(--grad);box-shadow:0 0 12px rgba(236,72,153,.6)}
+
+  /* ---- nav ---- */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+    padding:16px clamp(16px,5vw,48px);backdrop-filter:blur(12px);background:rgba(7,7,12,.55);border-bottom:1px solid transparent;transition:border-color .3s}
+  nav.scrolled{border-color:var(--stroke)}
+  .logo{font-family:"Space Grotesk";font-weight:700;font-size:1.15rem}
+  .logo span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav-links{display:flex;gap:26px;align-items:center}
+  .nav-links a{color:var(--muted);font-size:.92rem;font-weight:500;position:relative;transition:color .2s}
+  .nav-links a:hover{color:var(--text)}
+  .nav-links a::after{content:"";position:absolute;left:0;bottom:-6px;height:2px;width:0;background:var(--grad);transition:width .25s}
+  .nav-links a:hover::after{width:100%}
+  .burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:pointer;padding:8px}
+  .burger span{width:24px;height:2px;background:var(--text);transition:.3s}
+
+  /* ---- layout ---- */
+  section{padding:clamp(70px,10vw,120px) clamp(16px,5vw,48px);max-width:var(--max);margin:0 auto;position:relative;z-index:1}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--c4);font-weight:600;margin-bottom:14px}
+  .eyebrow::before{content:"";width:26px;height:1px;background:var(--c4)}
+  .section-title{font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 10px;font-weight:700}
+  .section-sub{color:var(--muted);max-width:60ch;margin:0 0 42px}
+
+  /* ---- hero ---- */
+  .hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;max-width:var(--max);margin:0 auto;padding:120px clamp(16px,5vw,48px) 80px}
+  .badge{display:inline-flex;align-items:center;gap:9px;padding:7px 15px;border:1px solid var(--stroke);border-radius:100px;background:var(--card);font-size:.85rem;color:var(--muted);width:fit-content;backdrop-filter:blur(8px)}
+  .dot{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 0 rgba(34,197,94,.7);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,197,94,.6)}70%{box-shadow:0 0 0 10px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
+  .hero h1{font-size:clamp(2.8rem,9vw,6.2rem);line-height:.98;margin:22px 0 6px;font-weight:700}
+  .hero h1 .grad{background:var(--grad);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+  @keyframes shine{to{background-position:200% center}}
+  .role-line{font-size:clamp(1.1rem,3vw,1.7rem);font-weight:600;color:var(--text);min-height:1.6em;margin-top:6px}
+  .role-line .type{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .caret{display:inline-block;width:3px;height:1.05em;background:var(--c2);margin-left:2px;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .hero p.lede{color:var(--muted);max-width:60ch;font-size:1.05rem;margin:22px 0 32px}
+  .cta{display:flex;flex-wrap:wrap;gap:14px}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:12px;font-weight:600;font-size:.95rem;border:1px solid var(--stroke);transition:transform .2s,box-shadow .2s,background .2s;cursor:pointer}
+  .btn:hover{transform:translateY(-3px)}
+  .btn.primary{background:var(--grad);color:#0a0a0f;border:0;box-shadow:0 10px 30px -8px rgba(236,72,153,.5)}
+  .btn.primary:hover{box-shadow:0 16px 40px -8px rgba(236,72,153,.65)}
+  .btn.ghost{background:var(--card);color:var(--text);backdrop-filter:blur(8px)}
+  .scroll-ind{margin-top:56px;display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.82rem;letter-spacing:.1em}
+  .mouse{width:22px;height:34px;border:2px solid var(--muted);border-radius:12px;position:relative}
+  .mouse::after{content:"";position:absolute;left:50%;top:7px;transform:translateX(-50%);width:4px;height:7px;border-radius:3px;background:var(--muted);animation:scroll 1.6s infinite}
+  @keyframes scroll{0%{opacity:1;top:7px}100%{opacity:0;top:17px}}
+
+  /* ---- marquee ---- */
+  .marquee{overflow:hidden;border-top:1px solid var(--stroke);border-bottom:1px solid var(--stroke);padding:18px 0;background:rgba(255,255,255,.02);margin-top:10px}
+  .marquee-track{display:flex;gap:46px;width:max-content;animation:scrollx 26s linear infinite}
+  .marquee:hover .marquee-track{animation-play-state:paused}
+  .marquee span{font-family:"Space Grotesk";font-weight:600;font-size:1.05rem;color:var(--muted);white-space:nowrap;display:inline-flex;gap:46px}
+  .marquee span::after{content:"\2022";color:var(--c2)}
+  @keyframes scrollx{to{transform:translateX(-50%)}}
+
+  /* ---- reveal ---- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* ---- stats ---- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .stat{padding:26px 20px;border:1px solid var(--stroke);border-radius:16px;background:var(--card);backdrop-filter:blur(8px);text-align:center}
+  .stat .num{font-family:"Space Grotesk";font-weight:700;font-size:clamp(1.8rem,4vw,2.8rem);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat .lbl{color:var(--muted);font-size:.85rem;margin-top:4px}
+
+  /* ---- about ---- */
+  .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:start}
+  .about-grid p{color:var(--muted);font-size:1.05rem}
+  .about-grid p strong{color:var(--text)}
+  .info-card{border:1px solid var(--stroke);border-radius:16px;background:var(--card);backdrop-filter:blur(8px);padding:24px}
+  .info-card .row{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px dashed var(--stroke);font-size:.92rem}
+  .info-card .row:last-child{border:0}
+  .info-card .k{color:var(--muted)}
+
+  /* ---- timeline ---- */
+  .timeline{position:relative;margin-top:10px;padding-left:34px}
+  .timeline::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--c1),var(--c2),var(--c3))}
+  .tl-item{position:relative;padding:0 0 34px}
+  .tl-item::before{content:"";position:absolute;left:-30px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--c2);box-shadow:0 0 0 4px rgba(236,72,153,.15)}
+  .tl-item .when{font-size:.8rem;color:var(--c4);font-weight:600;letter-spacing:.04em}
+  .tl-item h3{margin:6px 0 2px;font-size:1.15rem}
+  .tl-item .co{color:var(--muted);font-weight:500;margin-bottom:8px}
+  .tl-item p{color:var(--muted);margin:0;font-size:.96rem}
+
+  /* ---- projects ---- */
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .card{position:relative;border:1px solid var(--stroke);border-radius:18px;background:var(--card);backdrop-filter:blur(8px);padding:26px;overflow:hidden;transition:transform .2s,border-color .3s;transform-style:preserve-3d}
+  .card::before{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%),rgba(236,72,153,.14),transparent 45%);opacity:0;transition:opacity .3s}
+  .card:hover{border-color:rgba(236,72,153,.5)}
+  .card:hover::before{opacity:1}
+  .card .tag{font-size:.74rem;color:var(--c4);font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+  .card h3{margin:10px 0 8px;font-size:1.25rem}
+  .card p{color:var(--muted);font-size:.95rem;margin:0 0 16px}
+  .card .chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+  .card .links{display:flex;gap:16px;font-size:.88rem;font-weight:600}
+  .card .links a{color:var(--c4)}
+  .card .links a:hover{color:var(--text)}
+
+  .chip{font-size:.78rem;padding:5px 11px;border-radius:100px;border:1px solid var(--stroke);background:rgba(255,255,255,.03);color:var(--muted)}
+
+  /* ---- skills ---- */
+  .skill-groups{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .skill-col h3{font-size:1rem;margin:0 0 14px;color:var(--text);display:flex;align-items:center;gap:9px}
+  .skill-col h3::before{content:"";width:9px;height:9px;border-radius:3px;background:var(--grad)}
+  .skill-col .chips{display:flex;flex-wrap:wrap;gap:8px}
+
+  /* ---- publications / certs ---- */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  .list-item{border:1px solid var(--stroke);border-radius:14px;background:var(--card);padding:18px 20px;margin-bottom:14px}
+  .list-item h4{margin:0 0 5px;font-size:1rem}
+  .list-item span{color:var(--c4);font-size:.82rem;font-weight:600}
+  .list-item p{color:var(--muted);font-size:.9rem;margin:6px 0 0}
+
+  /* ---- contact ---- */
+  .contact{text-align:center}
+  .contact h2{font-size:clamp(2rem,6vw,4rem);margin:0 0 16px}
+  .contact .mail{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  footer{border-top:1px solid var(--stroke);padding:30px clamp(16px,5vw,48px);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;color:var(--muted);font-size:.85rem;max-width:var(--max);margin:0 auto}
+  footer .socials{display:flex;gap:18px}
+  footer .socials a:hover{color:var(--text)}
+
+  @media(max-width:860px){
+    .nav-links{position:fixed;inset:0 0 0 auto;width:min(78vw,320px);flex-direction:column;justify-content:center;gap:28px;background:rgba(10,10,18,.96);backdrop-filter:blur(16px);transform:translateX(100%);transition:transform .35s;border-left:1px solid var(--stroke)}
+    .nav-links.open{transform:none}
+    .nav-links a{font-size:1.15rem}
+    .burger{display:flex}
+    .about-grid,.cards,.skill-groups,.two-col{grid-template-columns:1fr}
+    .stats{grid-template-columns:repeat(2,1fr)}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="aurora"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="grid-overlay"></div>
+<div class="cursor-glow" id="glow"></div>
+<div class="progress" id="progress"></div>
+
+<nav id="nav">
+  <a class="logo" href="#top">JP<span>.</span></a>
+  <div class="nav-links" id="navlinks">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#research">Research</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <button class="burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<header class="hero" id="top">
+  <div class="badge reveal"><span class="dot"></span> Available for impactful AI & ops work</div>
+  <h1 class="reveal">Jayanth <span class="grad">Peddi</span></h1>
+  <div class="role-line reveal">I build & scale <span class="type" id="type"></span><span class="caret"></span></div>
+  <p class="lede reveal">AI &amp; Quality Operations professional working at the intersection of <strong style="color:var(--text)">GenAI training</strong>, <strong style="color:var(--text)">RLHF/SFT</strong>, and <strong style="color:var(--text)">full-stack engineering</strong> — improving LLM performance, holding the quality bar, and scaling project operations.</p>
+  <div class="cta reveal">
+    <a class="btn primary" href="#contact">Get in touch &rarr;</a>
+    <a class="btn ghost" href="Jayanth_Peddi_Resume.pdf" download>Download CV</a>
+    <a class="btn ghost" href="https://github.com/jp-999" target="_blank" rel="noopener">GitHub</a>
+  </div>
+  <div class="scroll-ind reveal"><span class="mouse"></span> SCROLL TO EXPLORE</div>
+</header>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span>GenAI&nbsp;&nbsp;RLHF&nbsp;&nbsp;SFT&nbsp;&nbsp;LLM Evaluation&nbsp;&nbsp;Quality Ops&nbsp;&nbsp;KPIs&nbsp;&nbsp;React&nbsp;&nbsp;Next.js&nbsp;&nbsp;Node.js&nbsp;&nbsp;Python&nbsp;&nbsp;MongoDB</span>
+    <span>GenAI&nbsp;&nbsp;RLHF&nbsp;&nbsp;SFT&nbsp;&nbsp;LLM Evaluation&nbsp;&nbsp;Quality Ops&nbsp;&nbsp;KPIs&nbsp;&nbsp;React&nbsp;&nbsp;Next.js&nbsp;&nbsp;Node.js&nbsp;&nbsp;Python&nbsp;&nbsp;MongoDB</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="eyebrow reveal">About</div>
+  <h2 class="section-title reveal">Quality at AI scale.</h2>
+  <div class="about-grid">
+    <div class="reveal">
+      <p>I'm <strong>Jayanth Peddi</strong>, an AI &amp; Quality Operations professional based in Hyderabad. I lead quality and delivery for large GenAI programs — turning messy, fast-moving contributor workflows into measurable, repeatable systems.</p>
+      <p>I've applied <strong>RLHF</strong> and <strong>SFT</strong> to improve frontier LLMs, evaluated multimodal AI code generation, and built the KPI tracking, calibration, and documentation that let a project grow from a handful of people to hundreds — without the quality bar slipping.</p>
+      <p>Before AI, I shipped production web and mobile apps as a full-stack and backend engineer, which keeps my feedback grounded in how software is actually built.</p>
+    </div>
+    <div class="info-card reveal">
+      <div class="row"><span class="k">Name</span><span>Jayanth Peddi</span></div>
+      <div class="row"><span class="k">Role</span><span>GenAI Queue Manager</span></div>
+      <div class="row"><span class="k">Location</span><span>Hyderabad, India</span></div>
+      <div class="row"><span class="k">Focus</span><span>GenAI / RLHF / QA</span></div>
+      <div class="row"><span class="k">Education</span><span>B.Tech CSE</span></div>
+      <div class="row"><span class="k">Status</span><span style="color:#22c55e">Open to work</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="stats">
+  <div class="stats">
+    <div class="stat reveal"><div class="num"><span data-count="300">0</span>+</div><div class="lbl">Contributors scaled</div></div>
+    <div class="stat reveal"><div class="num"><span data-count="15">0</span>&times;</div><div class="lbl">Program growth</div></div>
+    <div class="stat reveal"><div class="num"><span data-count="4">0</span></div><div class="lbl">Professional roles</div></div>
+    <div class="stat reveal"><div class="num"><span data-count="2">0</span></div><div class="lbl">Research publications</div></div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="eyebrow reveal">Experience</div>
+  <h2 class="section-title reveal">Where I've made an impact.</h2>
+  <p class="section-sub reveal">From scaling GenAI programs to shipping full-stack products.</p>
+  <div class="timeline">
+    <div class="tl-item reveal">
+      <div class="when">APR 2026 — PRESENT</div>
+      <h3>GenAI Queue Manager</h3>
+      <div class="co">Scale AI</div>
+      <p>Selected for project leadership, helping scale a GenAI coding project from fewer than 20 to <strong style="color:var(--text)">300+ contributors (15&times;+ growth)</strong>. Lead quality &amp; delivery operations — KPI monitoring, performance tracking, calibration, and escalation resolution — and built KPI systems and single-source-of-truth documentation.</p>
+    </div>
+    <div class="tl-item reveal">
+      <div class="when">APR 2025 — APR 2026</div>
+      <h3>AI Trainer</h3>
+      <div class="co">Outlier</div>
+      <p>Enhanced top-tier global LLMs with <strong style="color:var(--text)">RLHF and SFT</strong> fine-tuning for accuracy and alignment. Tested multimodal AI code generation across Next.js, React, Vue.js, and HTML/CSS/JS to produce production-ready frontends, across UI, STEM, generalist, and coding projects.</p>
+    </div>
+    <div class="tl-item reveal">
+      <div class="when">DEC 2024 — MAR 2025</div>
+      <h3>Backend Developer</h3>
+      <div class="co">IIIION</div>
+      <p>Built high-performing server-side applications using external APIs, MongoDB, and Next.js — with a focus on reliable data handling and seamless workflows.</p>
+    </div>
+    <div class="tl-item reveal">
+      <div class="when">APR 2024 — SEP 2024</div>
+      <h3>Full Stack Developer</h3>
+      <div class="co">NEXZAP</div>
+      <p>Delivered scalable front-to-back solutions, crafting reusable React components and integrating them with REST APIs, and contributed to sprint planning and product strategy.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="eyebrow reveal">Projects</div>
+  <h2 class="section-title reveal">Things I've built.</h2>
+  <p class="section-sub reveal">A mix of shipped products, research, and open-source.</p>
+  <div class="cards" id="cards">
+    <div class="card reveal">
+      <div class="tag">Flask &middot; Python</div>
+      <h3>Resume Generator</h3>
+      <p>A web app that builds polished resumes from structured input, with multiple templates, PDF export, and resume parsing. Recently hardened for serverless deployment.</p>
+      <div class="chips"><span class="chip">Flask</span><span class="chip">PyPDF2</span><span class="chip">Vercel</span></div>
+      <div class="links"><a href="https://github.com/jp-999/Resume-Generator" target="_blank" rel="noopener">Code &rarr;</a></div>
+    </div>
+    <div class="card reveal">
+      <div class="tag">Docs &middot; GitHub Pages</div>
+      <h3>Ultra Evals QC Spec</h3>
+      <p>A searchable, filterable QC specification document for an AI evaluation program — published as a self-contained static site.</p>
+      <div class="chips"><span class="chip">HTML</span><span class="chip">QA</span><span class="chip">Pages</span></div>
+      <div class="links"><a href="https://jp-999.github.io/nectarbloom-qc-spec/" target="_blank" rel="noopener">Live &rarr;</a></div>
+    </div>
+    <div class="card reveal">
+      <div class="tag">React Native &middot; Mobile</div>
+      <h3>Food Ordering App — Little Lemon</h3>
+      <p>A React Native app with an intuitive onboarding flow and smooth navigation, offering a user-centric interface for fast food selection and checkout.</p>
+      <div class="chips"><span class="chip">React Native</span><span class="chip">UX</span></div>
+      <div class="links"><a href="https://github.com/jp-999" target="_blank" rel="noopener">GitHub &rarr;</a></div>
+    </div>
+    <div class="card reveal">
+      <div class="tag">ML &middot; Computer Vision</div>
+      <h3>Face-Recognition Attendance</h3>
+      <p>A smart attendance system using facial recognition (KNN) to automate and authenticate check-ins — cutting manual work and errors. Published in IEEE Xplore.</p>
+      <div class="chips"><span class="chip">Python</span><span class="chip">KNN</span><span class="chip">OpenCV</span></div>
+      <div class="links"><a href="#research">Paper &rarr;</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="eyebrow reveal">Skills</div>
+  <h2 class="section-title reveal">My toolkit.</h2>
+  <div class="skill-groups">
+    <div class="skill-col reveal">
+      <h3>AI Training &amp; Eval</h3>
+      <div class="chips">
+        <span class="chip">LLMs</span><span class="chip">RLHF</span><span class="chip">SFT</span><span class="chip">Fine-tuning</span><span class="chip">AI Code Eval</span><span class="chip">Multimodal</span>
+      </div>
+    </div>
+    <div class="skill-col reveal">
+      <h3>Quality &amp; Leadership</h3>
+      <div class="chips">
+        <span class="chip">KPI Tracking</span><span class="chip">Calibration</span><span class="chip">Escalation Mgmt</span><span class="chip">SSOT Docs</span><span class="chip">Contributor Mgmt</span><span class="chip">Onboarding</span>
+      </div>
+    </div>
+    <div class="skill-col reveal">
+      <h3>Engineering</h3>
+      <div class="chips">
+        <span class="chip">JavaScript</span><span class="chip">React</span><span class="chip">Next.js</span><span class="chip">Vue.js</span><span class="chip">Node.js</span><span class="chip">React Native</span><span class="chip">MongoDB</span><span class="chip">REST APIs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="eyebrow reveal">Research &amp; Credentials</div>
+  <h2 class="section-title reveal">Publications &amp; certifications.</h2>
+  <div class="two-col">
+    <div class="reveal">
+      <div class="list-item">
+        <span>IEEE XPLORE</span>
+        <h4>Face Recognition based Attendance System using KNN</h4>
+        <p>A KNN-based face-recognition system for automated identity verification and attendance, reducing reliance on manual processes.</p>
+      </div>
+      <div class="list-item">
+        <span>IJMER</span>
+        <h4>GNNs for Automated Fault Localization (DepGraph)</h4>
+        <p>A Graph Neural Network approach to software fault localization; a dependency-enhanced coverage graph cut GPU memory from 143&nbsp;GB to 80&nbsp;GB and training time from 9 days to 1.5 days on Defects4J.</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="list-item"><span>COURSERA</span><h4>Meta React Native Specialization</h4></div>
+      <div class="list-item"><span>STANFORD</span><h4>Machine Learning</h4></div>
+      <div class="list-item"><span>UDEMY</span><h4>Full Stack Web Development</h4></div>
+      <div class="list-item"><span>EDX</span><h4>Data Structures &amp; Algorithms I</h4></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="eyebrow reveal" style="justify-content:center">Contact</div>
+  <h2 class="reveal">Let's build something<br><span class="mail">worth measuring.</span></h2>
+  <p class="section-sub reveal" style="margin:0 auto 32px">Open to roles and collaborations in GenAI operations, AI training/evaluation, and full-stack work.</p>
+  <div class="cta reveal" style="justify-content:center">
+    <a class="btn primary" href="mailto:jayanthpeddi999@gmail.com">Email me &rarr;</a>
+    <a class="btn ghost" href="https://www.linkedin.com/in/jayanth-peddi" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn ghost" href="https://github.com/jp-999" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</section>
+
+<footer>
+  <div>&copy; <span id="year"></span> Jayanth Peddi — built with too much CSS.</div>
+  <div class="socials">
+    <a href="mailto:jayanthpeddi999@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/jayanth-peddi" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/jp-999" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  // year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // cursor glow
+  var glow = document.getElementById('glow');
+  var gx=innerWidth/2, gy=innerHeight/2, cx=gx, cy=gy;
+  addEventListener('pointermove', function(e){ gx=e.clientX; gy=e.clientY; }, {passive:true});
+  (function anim(){ cx+=(gx-cx)*.12; cy+=(gy-cy)*.12; glow.style.transform='translate('+cx+'px,'+cy+'px) translate(-50%,-50%)'; requestAnimationFrame(anim); })();
+
+  // scroll progress + nav state
+  var progress=document.getElementById('progress'), nav=document.getElementById('nav');
+  addEventListener('scroll', function(){
+    var h=document.documentElement, st=h.scrollTop, sh=h.scrollHeight-h.clientHeight;
+    progress.style.width=(sh>0?(st/sh*100):0)+'%';
+    nav.classList.toggle('scrolled', st>20);
+  }, {passive:true});
+
+  // mobile menu
+  var burger=document.getElementById('burger'), links=document.getElementById('navlinks');
+  burger.addEventListener('click', function(){ links.classList.toggle('open'); });
+  links.addEventListener('click', function(e){ if(e.target.tagName==='A') links.classList.remove('open'); });
+
+  // reveal on scroll
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('visible'); io.unobserve(en.target); } });
+  }, {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  // count-up stats
+  var counted=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var el=en.target, target=+el.getAttribute('data-count'), start=null, dur=1400;
+      function step(ts){ if(!start) start=ts; var p=Math.min((ts-start)/dur,1); el.textContent=Math.floor(p*target); if(p<1) requestAnimationFrame(step); else el.textContent=target; }
+      requestAnimationFrame(step); counted.unobserve(el);
+    });
+  }, {threshold:.6});
+  document.querySelectorAll('[data-count]').forEach(function(el){ counted.observe(el); });
+
+  // typewriter roles
+  var roles=['GenAI programs','RLHF & SFT pipelines','high-quality AI data','full-stack products','teams that scale'];
+  var typeEl=document.getElementById('type'), ri=0, ci=0, deleting=false;
+  function tick(){
+    var full=roles[ri];
+    typeEl.textContent = full.slice(0, ci);
+    if(!deleting){
+      if(ci<full.length){ ci++; setTimeout(tick,70); }
+      else { deleting=true; setTimeout(tick,1500); }
+    } else {
+      if(ci>0){ ci--; setTimeout(tick,35); }
+      else { deleting=false; ri=(ri+1)%roles.length; setTimeout(tick,250); }
+    }
+  }
+  tick();
+
+  // card tilt + spotlight
+  document.querySelectorAll('.card').forEach(function(card){
+    card.addEventListener('pointermove', function(e){
+      var r=card.getBoundingClientRect(), px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+      card.style.setProperty('--mx', (px*100)+'%');
+      card.style.setProperty('--my', (py*100)+'%');
+      card.style.transform='perspective(800px) rotateY('+((px-.5)*7)+'deg) rotateX('+((.5-py)*7)+'deg) translateY(-4px)';
+    });
+    card.addEventListener('pointerleave', function(){ card.style.transform='none'; });
+  });
+})();
+</script>
+</body>
+</html>
