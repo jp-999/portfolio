@@ -197,6 +197,13 @@
   .loader-mono{font-family:"Space Grotesk";font-weight:700;font-size:3rem;background:var(--grad);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 2.5s linear infinite}
   .loader-count{font-family:"Space Grotesk";font-weight:600;font-size:1.05rem;color:var(--muted);letter-spacing:.06em}
   .loader-count i{color:var(--c2);font-style:normal}
+
+  /* ---- about links + paper links ---- */
+  .about-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .about-links a{display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border:1px solid var(--stroke);border-radius:100px;background:var(--card);color:var(--c4);font-weight:600;font-size:.86rem;transition:border-color .25s,transform .2s,color .2s}
+  .about-links a:hover{border-color:rgba(236,72,153,.5);color:var(--text);transform:translateY(-2px)}
+  .list-item a.paper-link{display:inline-block;margin-top:10px;color:var(--c4);font-weight:600;font-size:.85rem}
+  .list-item a.paper-link:hover{color:var(--text)}
 </style>
 </head>
 <body>
@@ -253,6 +260,11 @@
       <p>I'm <strong>Jayanth Peddi</strong>, an AI &amp; Quality Operations professional based in Hyderabad. I lead quality and delivery for large GenAI programs, turning messy, fast-moving contributor workflows into measurable, repeatable systems.</p>
       <p>I've applied <strong>RLHF</strong> and <strong>SFT</strong> to improve frontier LLMs, evaluated multimodal AI code generation, and built the KPI tracking, calibration, and documentation that let a project grow from a handful of people to hundreds, without the quality bar slipping.</p>
       <p>Before AI, I shipped production web and mobile apps as a full-stack and backend engineer, which keeps my feedback grounded in how software is actually built.</p>
+      <div class="about-links">
+        <a href="https://ieeexplore.ieee.org/document/11042050/" target="_blank" rel="noopener">IEEE Paper &#8599;</a>
+        <a href="https://s3-ap-southeast-1.amazonaws.com/ijmer/pdf/volume14/volume14-issue2(1)/24.pdf" target="_blank" rel="noopener">DepGraph (IJMER) &#8599;</a>
+        <a href="https://jp-999.github.io/portfolio/" target="_blank" rel="noopener">Portfolio &#8599;</a>
+      </div>
     </div>
     <div class="info-card reveal">
       <div class="row"><span class="k">Name</span><span>Jayanth Peddi</span></div>
@@ -330,14 +342,14 @@
       <h3>Face-Recognition Attendance</h3>
       <p>A smart attendance system using facial recognition (KNN) to automate and authenticate check-ins, cutting manual work and errors. Published in IEEE Xplore.</p>
       <div class="chips"><span class="chip">Python</span><span class="chip">KNN</span><span class="chip">OpenCV</span></div>
-      <div class="links"><a href="#research">Paper &rarr;</a></div>
+      <div class="links"><a href="https://ieeexplore.ieee.org/document/11042050/" target="_blank" rel="noopener">Paper &rarr;</a></div>
     </div>
     <div class="card reveal">
       <div class="tag">Research &middot; GNN</div>
       <h3>DepGraph: GNN Fault Localization</h3>
       <p>A Graph Neural Network approach to automated software fault localization. A dependency-enhanced coverage graph cut GPU memory from 143 GB to 80 GB and training time from 9 days to 1.5 days on the Defects4J benchmark.</p>
       <div class="chips"><span class="chip">Python</span><span class="chip">GNN</span><span class="chip">Defects4J</span></div>
-      <div class="links"><a href="#research">Paper &rarr;</a></div>
+      <div class="links"><a href="https://s3-ap-southeast-1.amazonaws.com/ijmer/pdf/volume14/volume14-issue2(1)/24.pdf" target="_blank" rel="noopener">Paper &rarr;</a></div>
     </div>
   </div>
 </section>
@@ -376,11 +388,13 @@
         <span>IEEE XPLORE</span>
         <h4>Face Recognition based Attendance System using KNN</h4>
         <p>A KNN-based face-recognition system for automated identity verification and attendance, reducing reliance on manual processes.</p>
+        <a class="paper-link" href="https://ieeexplore.ieee.org/document/11042050/" target="_blank" rel="noopener">Read paper &rarr;</a>
       </div>
       <div class="list-item">
         <span>IJMER</span>
         <h4>GNNs for Automated Fault Localization (DepGraph)</h4>
         <p>A Graph Neural Network approach to software fault localization; a dependency-enhanced coverage graph cut GPU memory from 143&nbsp;GB to 80&nbsp;GB and training time from 9 days to 1.5 days on Defects4J.</p>
+        <a class="paper-link" href="https://s3-ap-southeast-1.amazonaws.com/ijmer/pdf/volume14/volume14-issue2(1)/24.pdf" target="_blank" rel="noopener">Read paper &rarr;</a>
       </div>
     </div>
     <div class="reveal">
